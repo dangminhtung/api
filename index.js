@@ -16,10 +16,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // app.use("/uploads", express.static("./uploads"))
-app.use('/api', userRouter)
+app.use('/api/user', userRouter)
 app.use('/api/product', productRouter)
-app.use('/api', cartRouter)
-app.use('/api', orderRouter)
+app.use('/api/cart', cartRouter)
+app.use('/api/order', orderRouter)
 
 
 app.listen(PORT, () => console.log("Server connected http://localhost:3000"))
