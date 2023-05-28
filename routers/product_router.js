@@ -1,20 +1,20 @@
 var express = require("express")
 var product_Controller = require('../controller/productController')
-var multer = require('multer')
+// var multer = require('multer')
 var router = express.Router();
 var path = require('path');
 const { arrangeAlphaAZ } = require("../models/product_model");
 
 
-const storage = multer.diskStorage({
-    destination: './uploads',
-    filename: (req, file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-    }
-})
-const upload = multer({
-    storage: storage
-})
+// const storage = multer.diskStorage({
+//     destination: './uploads',
+//     filename: (req, file, cb) => {
+//         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+//     }
+// })
+// const upload = multer({
+//     storage: storage
+// })
 
 // arrange Alpha A-Z
 router.get('/arrangeAlphaAZ', product_Controller.arrangeAlphaAZ)
@@ -47,13 +47,8 @@ router.get('/:id', product_Controller.get_detail_product)
 router.post('/update', product_Controller.updateProduct)
 
 router.get('/recommend/:productID', product_Controller.getRecommend)
-router.post('/add', upload.single('image'), product_Controller.addProduct)
+// router.post('/add', upload.single('image'), product_Controller.addProduct)
 router.delete('/delete', product_Controller.deleteProduct)
-
-
-
-
-
 
 
 module.exports = router;
