@@ -27,8 +27,6 @@ const authController = {
                     bcrypt.compare(password, user.password, (err, result) => {
                         if (result == true) {
                             const accessToken = authController.generateAccessToken(user);
-
-
                             const { password, ...others } = user;//dùng để loại thuộc tính password khi trả về 
                             res.status(200).json({ ...others, accessToken })
                         } else {

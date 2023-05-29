@@ -47,7 +47,7 @@ router.get('/:id', product_Controller.get_detail_product)
 router.post('/update', product_Controller.updateProduct)
 
 router.get('/recommend/:productID', product_Controller.getRecommend)
-// router.post('/add', upload.single('image'), product_Controller.addProduct)
+router.post('/add', product_Controller.addProduct)
 router.delete('/delete', product_Controller.deleteProduct)
 
 
