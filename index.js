@@ -1,5 +1,6 @@
 var express = require("express");
 var dotenv = require("dotenv");
+var cors = require('cors')
 var app = express();
 
 var bodyParser = require("body-parser")
@@ -12,6 +13,7 @@ var productRouter = require('./routers/product_router')
 var cartRouter = require('./routers/cart_router')
 var orderRouter = require('./routers/order_router')
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
