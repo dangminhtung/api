@@ -79,8 +79,6 @@ const product_Controller = {
         Product.update(id, product, (respond) => {
             res.send(respond)
         })
-
-
     },
     deleteProduct: (req, res) => {
         const productID = req.body.productID;
@@ -108,8 +106,12 @@ const product_Controller = {
             Product.filterPrice(from, to, (respond) => {
                 res.json(respond)
             })
-
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSize(size, (respond) => {
+                res.json(respond)
+            })
+        }
+        else {
             Product.filterPriceAndSize(from, to, size, (respond) => {
                 res.json(respond)
             })
@@ -124,11 +126,18 @@ const product_Controller = {
                 res.json(respond)
             })
 
-        } else {
+        }
+        else if (from == null && to == null) {
+            Product.filterSizeFollowCate(size, cate, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeFollowCate(from, to, cate, size, (respond) => {
                 res.json(respond)
             })
         }
+
     },
 
     // Arrange Alpha A-Z
@@ -145,7 +154,12 @@ const product_Controller = {
             Product.filterPriceArrange(from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange(size, arr, name, (data) => {
+                res.json(data);
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange(from, to, size, arr, name, (respond) => {
                 res.json(respond)
             })
@@ -165,7 +179,13 @@ const product_Controller = {
             Product.filterPriceArrange_cate(cate, from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        }
+        else if (from == null && to == null) {
+            Product.filterSizeArrange_cate(cate, size, arr, name, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange_cate(from, to, cate, size, arr, name, (data) => {
                 res.json(data)
             })
@@ -185,7 +205,12 @@ const product_Controller = {
             Product.filterPriceArrange(from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange(size, arr, name, (data) => {
+                res.json(data);
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange(from, to, size, arr, name, (respond) => {
                 res.json(respond)
             })
@@ -205,7 +230,12 @@ const product_Controller = {
             Product.filterPriceArrange_cate(cate, from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange_cate(cate, size, arr, name, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange_cate(from, to, cate, size, arr, name, (data) => {
                 res.json(data)
             })
@@ -224,6 +254,11 @@ const product_Controller = {
         } else if (size == null) {
             Product.filterPriceArrange(from, to, arr, name, (respond) => {
                 res.json(respond)
+            })
+        }
+        else if (from == null && to == null) {
+            Product.filterSizeArrange(size, arr, name, (data) => {
+                res.json(data);
             })
         } else {
             Product.filterPriceAndSizeArrange(from, to, size, arr, name, (respond) => {
@@ -245,7 +280,12 @@ const product_Controller = {
             Product.filterPriceArrange_cate(cate, from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange_cate(cate, size, arr, name, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange_cate(from, to, cate, size, arr, name, (data) => {
                 res.json(data)
             })
@@ -265,7 +305,12 @@ const product_Controller = {
             Product.filterPriceArrange(from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange(size, arr, name, (data) => {
+                res.json(data);
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange(from, to, size, arr, name, (respond) => {
                 res.json(respond)
             })
@@ -285,7 +330,12 @@ const product_Controller = {
             Product.filterPriceArrange_cate(cate, from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange_cate(cate, size, arr, name, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange_cate(from, to, cate, size, arr, name, (data) => {
                 res.json(data)
             })
@@ -305,7 +355,12 @@ const product_Controller = {
             Product.filterPriceArrange(from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange(size, arr, name, (data) => {
+                res.json(data);
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange(from, to, size, arr, name, (respond) => {
                 res.json(respond)
             })
@@ -325,7 +380,12 @@ const product_Controller = {
             Product.filterPriceArrange_cate(cate, from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange_cate(cate, size, arr, name, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange_cate(from, to, cate, size, arr, name, (data) => {
                 res.json(data)
             })
@@ -345,7 +405,12 @@ const product_Controller = {
             Product.filterPriceArrange(from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange(size, arr, name, (data) => {
+                res.json(data);
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange(from, to, size, arr, name, (respond) => {
                 res.json(respond)
             })
@@ -365,7 +430,12 @@ const product_Controller = {
             Product.filterPriceArrange_cate(cate, from, to, arr, name, (respond) => {
                 res.json(respond)
             })
-        } else {
+        } else if (from == null && to == null) {
+            Product.filterSizeArrange_cate(cate, size, arr, name, (data) => {
+                res.json(data)
+            })
+        }
+        else {
             Product.filterPriceAndSizeArrange_cate(from, to, cate, size, arr, name, (data) => {
                 res.json(data)
             })

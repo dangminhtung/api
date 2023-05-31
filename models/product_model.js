@@ -55,6 +55,12 @@ class Product {
             }
         })
     }
+    static filterSize(size, result) {
+        db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? LIMIT 0,100', [size], (err, res) => {
+            if (err) result(err);
+            else result(res);
+        })
+    }
     static filterPriceAndSize(from, to, size, result) {
         db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where pro.price>=? and pro.price<=? and pros.size=? LIMIT 0,100', [from, to, size], (err, res) => {
             if (err) result(err);
@@ -70,6 +76,12 @@ class Product {
             }
         })
     }
+    static filterSizeFollowCate(size, cate, result) {
+        db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and categoryID=? LIMIT 0,100'[size, cate], (err, res) => {
+            if (err) result(err)
+            else result(res);
+        })
+    }
     static filterPriceAndSizeFollowCate(from, to, cate, size, result) {
         db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where pro.price>=? and pro.price<=? and pros.size=? and categoryID=? LIMIT 0,100', [from, to, size, cate], (err, res) => {
             if (err) result(err);
@@ -83,6 +95,12 @@ class Product {
             else result(res)
         })
     }
+    static filterSizeArrange(size, arr, name, result) {
+        db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pros.size=? order by pro.${name} ${arr}`, [size], (err, res) => {
+            if (err) result(err)
+            else result(res)
+        })
+    }
     static filterPriceAndSizeArrange(from, to, size, arr, name, result) {
         db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? order by pro.${name} ${arr}`, [from, to, size], (err, res) => {
             if (err) result(err);
@@ -91,6 +109,12 @@ class Product {
     }
     static filterPriceArrange_cate(cate, from, to, arr, name, result) {
         db.query(`select * from product where price>=? and  price<=? and categoryID=? order by ${name} ${arr} `, [from, to, cate], (err, res) => {
+            if (err) result(err)
+            else result(res)
+        })
+    }
+    static filterSizeArrange_cate(cate, size, arr, name, result) {
+        db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pros.size=? and categoryID=? order by pro.${name} ${arr}`, [size, cate], (err, res) => {
             if (err) result(err)
             else result(res)
         })
