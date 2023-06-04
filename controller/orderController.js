@@ -11,9 +11,8 @@ const orderController = {
                 console.log({ value: val.cartID })
             })
         })
-
     },
-    add_order: (req, res) => {
+    checkOutCart: (req, res) => {
         const { userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount } = req.body;
         let orderID = (Math.random() + 1).toString(36).substring(7);
         Order.add(orderID, userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount, (respond) => {
@@ -24,12 +23,23 @@ const orderController = {
                     productSizeID = val.productSizeID;
                     number = val.number;
                     price = val.price
-                    Order.SaveCartToOrder(orderDetailID, orderID, productID, productSizeID, number, price, (result) => {})
+                    Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, productSizeID, number, price, (result) => { })
                 })
                 res.send('add sucess')
             })
         })
-
     },
+    BuyItNow: (req, res) => {
+        const { userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount } = req.body;
+        const { productID, productSizeID, number, price } = req.body;
+        let orderID = (Math.random() + 1).toString(36).substring(7);
+        Order.add(orderID, userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount, (respond) => {
+            let orderDetailID = (Math.random() + 1).toString(36).substring(4);
+            Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, productSizeID, number, price, (data) => {
+                res.send("thanh toan thanh cong")
+            })
+        })
+    }
+
 }
 module.exports = orderController;

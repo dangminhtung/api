@@ -29,12 +29,11 @@ class Order {
 
         })
     }
-    static SaveCartToOrder(orderDetailID, orderID, productID, productSizeID, number, price, result) {
+    static SaveCartToOrder_deltail(orderDetailID, orderID, productID, productSizeID, number, price, result) {
         db.query("insert into order_detail set ?", { orderDetailID, orderID, productID, productSizeID, number, price }, (err, res) => {
             if (err) result(err);
             else result(res);
         })
-
     }
 
 }
