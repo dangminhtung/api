@@ -40,6 +40,8 @@ router.get('/arrangeDateZA_cate/:cate', product_Controller.arrangeDateZA_cate)
 router.get('/filterPrice', product_Controller.filterPrice)
 router.get('/filterFollowCate/:cate', product_Controller.filterPriceFollowCate)
 
+router.get('/test', product_Controller.test)
+
 router.get('/list', product_Controller.get_all_product);
 router.get('/sportshoe', product_Controller.get_shoe_sport)
 router.get('/gymshoe', product_Controller.get_shoe_gym)

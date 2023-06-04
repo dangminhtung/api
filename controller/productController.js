@@ -4,19 +4,58 @@ const db = require('../common/connect')
 const product_Controller = {
 
     get_all_product: (req, res) => {
-
-        try {
-            db.query('select * from product', (err, data) => {
-                if (err) {
-                    res.status(403).json(err);
-                }
-                else {
-                    res.status(200).json(data)
-                }
-            })
-        } catch (err) {
-            res.status(500).json(err);
+        var from = req.query.from;
+        var to = req.query.to;
+        var size = req.query.size;
+        var sort_by = req.query.sort_by;
+        var name, arr;
+        if (sort_by == 'title-ascending') {
+            name = 'name'
+            arr = 'ASC'
+        } else if (sort_by == 'title-descending') {
+            name = 'name'
+            arr = 'DESC'
+        } else if (sort_by == 'price-ascending') {
+            name = 'price'
+            arr = 'ASC'
+        } else if (sort_by == 'price-descending') {
+            name = 'price'
+            arr = 'DESC'
+        } else if (sort_by == 'created-ascending') {
+            name = 'createDate'
+            arr = 'ASC'
+        } else if (sort_by == 'created-descending') {
+            name = 'createDate'
+            arr = 'DESC'
         }
+        if (from == null) from = 0;
+        if (to == null) to = 10000;
+        if (size == null && sort_by == null) {
+            db.query('select * from product where price >=? and price<=?', [from, to], (err, data) => {
+                if (err) res.json(err);
+                else res.json(data);
+            })
+        } else if (sort_by == null) {
+            db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? LIMIT 0,100', [size, from, to], (err, data) => {
+                if (err) res.json(err);
+                else res.json(data);
+            })
+        } else if (size == null) {
+            db.query(`select * from product where price>=? and price <=? order by ${name} ${arr}`, [from, to], (err, data) => {
+                if (err) res.json(err);
+                else res.json(data);
+            })
+        } else {
+            db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? order by pro.${name} ${arr}`, [from, to, size], (err, data) => {
+                if (err) res.json(err);
+                else res.json(data);
+            })
+        }
+
+
+
+
+
     },
     get_shoe_sport: (req, res) => {
         try {
@@ -442,7 +481,21 @@ const product_Controller = {
         }
     },
 
+    test: (req, res) => {
+        var cate = req.query.cate;
+        if (cate == null) {
+            db.query('select * from product', (err, data) => {
+                if (err) res.json(err);
+                else res.json(data);
+            })
 
+        } else {
+            db.query('select * from product where categoryID=?', [cate], (err, data) => {
+                if (err) res.json(err);
+                else res.json(data);
+            })
+        }
+    }
 
 
 
