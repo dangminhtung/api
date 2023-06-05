@@ -159,7 +159,7 @@ const product_Controller = {
     },
 
     get_detail_product: (req, res) => {
-        const productID = req.params.id;
+        var productID = req.params.id;
         db.query('select * from product where productID=?', [productID], (err, data) => {
             if (err) res.json(err);
             else res.json(data)

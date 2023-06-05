@@ -18,7 +18,7 @@ const { arrangeAlphaAZ } = require("../models/product_model");
 
 // arrange Alpha A-Z
 
-router.get('/test/:id', product_Controller.getSize)
+router.get('/size/:id', product_Controller.getSize)
 
 router.get('/list', product_Controller.get_all_product);
 router.get('/sportShoe', product_Controller.get_shoe_sport);
