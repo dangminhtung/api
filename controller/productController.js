@@ -86,7 +86,7 @@ const product_Controller = {
         if (from == null) from = 0;
         if (to == null) to = 10000;
         if (size == null && sort_by == null) {
-            db.query('select * from product where price >=? and price<=? and vategoryID =? ', [from, to, cate], (err, data) => {
+            db.query('select * from product where price >=? and price<=? and categoryID =? ', [from, to, cate], (err, data) => {
                 if (err) res.json(err);
                 else res.json(data);
             })
@@ -136,7 +136,7 @@ const product_Controller = {
         if (from == null) from = 0;
         if (to == null) to = 10000;
         if (size == null && sort_by == null) {
-            db.query('select * from product where price >=? and price<=? and vategoryID =? ', [from, to, cate], (err, data) => {
+            db.query('select * from product where price >=? and price<=? and categoryID =? ', [from, to, cate], (err, data) => {
                 if (err) res.json(err);
                 else res.json(data);
             })
