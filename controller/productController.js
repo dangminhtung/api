@@ -187,7 +187,8 @@ const product_Controller = {
             categoryID: req.body.categoryID,
             price: req.body.price,
             metarial: req.body.metarial,
-            vendor: req.body.vendor
+            vendor: req.body.vendor,
+            image: req.body.image
         }
         Product.update(id, product, (respond) => {
             res.send(respond)
