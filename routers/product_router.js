@@ -43,8 +43,9 @@ router.get('/filterFollowCate/:cate', product_Controller.filterPriceFollowCate)
 router.get('/test', product_Controller.test)
 
 router.get('/list', product_Controller.get_all_product);
-router.get('/sportshoe', product_Controller.get_shoe_sport)
-router.get('/gymshoe', product_Controller.get_shoe_gym)
+router.get('/sportShoe', product_Controller.get_shoe_sport);
+router.get('/gymShoe', product_Controller.get_shoe_gym)
+
 router.get('/:id', product_Controller.get_detail_product)
 router.post('/update', product_Controller.updateProduct)
 
