@@ -47,6 +47,7 @@ router.get('/sportShoe', product_Controller.get_shoe_sport);
 router.get('/gymShoe', product_Controller.get_shoe_gym)
 
 router.get('/:id', product_Controller.get_detail_product)
+router.get('/size_detail/:id', product_Controller.get_size_detail)
 router.post('/update', product_Controller.updateProduct)
 
 router.get('/recommend/:productID', product_Controller.getRecommend)

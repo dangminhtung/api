@@ -160,12 +160,23 @@ const product_Controller = {
 
     get_detail_product: (req, res) => {
         const productID = req.params.id;
-        db.query("SELECT pro.`productID`,pros.productSizeID,name,`categoryID`,price,metarial,vendor,`createDate`,pros.size,pros.quanlity from product as pro INNER JOIN product_size as pros on pro.`productID`= pros.`productID` where pro.`productID`=? ", [productID], (err, data) => {
-            if (err) {
-                res.status(403).json(err);
-            } else {
-                res.status(200).json(data)
-            }
+        // db.query("SELECT pro.`productID`,pros.productSizeID,name,`categoryID`,price,metarial,vendor,`createDate`,pros.size,pros.quanlity from product as pro INNER JOIN product_size as pros on pro.`productID`= pros.`productID` where pro.`productID`=? ", [productID], (err, data) => {
+        //     if (err) {
+        //         res.status(403).json(err);
+        //     } else {
+        //         res.status(200).json(data)
+        //     }
+        // })
+        db.query('select * from product where productID=?', [productID], (err, data) => {
+            if (err) res.json(err);
+            else res.json(data)
+        })
+    },
+    get_size_detail: (res, req) => {
+        const productID = req.params.id;
+        db.query('select * from product_size where productID=?', [productID], (err, data) => {
+            if (err) res.json(err);
+            else res.json(data)
         })
     },
     addProduct: (req, res) => {
