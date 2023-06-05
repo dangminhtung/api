@@ -6,8 +6,9 @@ const { response } = require('express');
 const cartController = {
     getCart: (req, res) => {
         const userID = req.body.userID;
-        Cart.getDetailCart(userID, (err, data) => {
-            res.status(200).json(data)
+        db.query('select * from cart where userID=?', [userID], (err, data) => {
+            if (err) res.json(err)
+            else res.json(data)
         })
     },
     add: (req, res) => {
@@ -16,11 +17,11 @@ const cartController = {
             if (!data) {
                 const cartID = Math.floor(Math.random() * 100000);
                 const number = 1;
-                db.query('insert into cart set ?', { cartID, userID, productID, productSizeID, price, number }, (err) => {
+                db.query('insert into cart set ?', { cartID, userID, productID, productSizeID, price, number }, (err, respond) => {
                     if (err) {
                         res.send(err)
                     } else {
-                        res.send('add success')
+                        res.json("add thanh cong")
                     }
                 })
             } else {
@@ -50,11 +51,11 @@ const cartController = {
                 number = number - 1;
                 // res.json(price)
                 Cart.updateCart(data.cartID, price, number, (respond) => {
-                    res.send({ result: respond })
+                    res.json("xoa thanh cong")
                 })
             } else {
                 Cart.deleteCart(cartID, (response) => {
-                    res.send({ result: response })
+                    res.json("xoa thanh cong")
                 })
             }
         })
