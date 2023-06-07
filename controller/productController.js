@@ -167,9 +167,9 @@ const product_Controller = {
     },
 
     addProduct: (req, res) => {
-        const { productID, name, categoryID, price, metarial, vendor, createDate } = req.body
+        const { productID, name, categoryID, price, metarial, vendor, createDate, image } = req.body
         // const image = req.file.filename
-        db.query('insert into product set ? ', { productID, name, categoryID, price, metarial, vendor, createDate }, (err) => {
+        db.query('insert into product set ? ', { productID, name, categoryID, price, metarial, vendor, createDate, image }, (err) => {
             if (err) {
                 res.status(403).json(err);
             } else {
