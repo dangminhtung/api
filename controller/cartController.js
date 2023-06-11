@@ -5,7 +5,7 @@ const { response } = require('express');
 
 const cartController = {
     getCart: (req, res) => {
-        const userID = req.body.userID;
+        const userID = req.query.userID;
         db.query('select * from cart where userID=?', [userID], (err, data) => {
             if (err) res.json(err)
             else res.json(data)
