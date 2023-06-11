@@ -28,7 +28,7 @@ router.get('/gymShoe', product_Controller.get_shoe_gym)
 router.get('/product_detail/:id', product_Controller.get_detail_product)
 router.post('/update', product_Controller.updateProduct)
 
-router.get('/recommend/:productID', product_Controller.getRecommend)
+router.get('/recommend', product_Controller.getRecommend)
 router.post('/add', product_Controller.addProduct)
 router.delete('/delete', product_Controller.deleteProduct)
 

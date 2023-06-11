@@ -204,9 +204,9 @@ const product_Controller = {
     },
     // getRecommend
     getRecommend: (req, res) => {
-        const categoryID = req.body.categoryID;
-        const productID = req.params.productID;
-        Product.getRecommend(productID, categoryID, (respond) => {
+        const cate = req.query.cate;
+        const productID = req.query.productID;
+        Product.getRecommend(productID, cate, (respond) => {
             res.json(respond)
         })
     },
