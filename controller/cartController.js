@@ -12,12 +12,12 @@ const cartController = {
         })
     },
     add: (req, res) => {
-        const { userID, productID, productSizeID, price } = req.body;
+        const { userID, productID, productSizeID, price, image } = req.body;
         Cart.checkCart(userID, productID, productSizeID, (err, data) => {
             if (!data) {
                 const cartID = Math.floor(Math.random() * 100000);
                 const number = 1;
-                db.query('insert into cart set ?', { cartID, userID, productID, productSizeID, price, number }, (err, respond) => {
+                db.query('insert into cart set ?', { cartID, userID, productID, productSizeID, price, number, image }, (err, respond) => {
                     if (err) {
                         res.send(err)
                     } else {
@@ -39,12 +39,27 @@ const cartController = {
             }
         })
     },
+    addToCart: (req, res) => {
+        const cartID = req.body.cartID;
+        Cart.get_id_Cart(cartID, (err, data) => {
+            var numberPro = data.number;
+            var pricePro = data.price;
+            pricePro += pricePro / numberPro;
+            numberPro += 1;
+            db.query('update cart set number=?,price=? where cartID=?', [numberPro, pricePro, data.cartID], (err, data) => {
+                if (err) {
+                    res.send('loi')
+                } else {
+                    res.send('add success')
+                }
+            })
+        })
+    },
     deleteToCart: (req, res) => {
         const cartID = req.body.cartID;
         Cart.get_id_Cart(cartID, (err, data) => {
             var price = data.price;
             var number = data.number;
-
             if (data.number > 1) {
                 var priceOne = price / number;
                 price -= priceOne
