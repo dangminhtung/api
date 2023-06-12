@@ -18,8 +18,8 @@ Cart.getDetailCart = (id, result) => {
         }
     })
 }
-Cart.checkCart = (userID, productID, productSizeID, result) => {
-    db.query('select * from cart where userID=? and productID=? and productSizeID=?', [userID, productID, productSizeID], (err, res) => {
+Cart.checkCart = (userID, productID, size, result) => {
+    db.query('select * from cart where userID=? and productID=? and size=?', [userID, productID, size], (err, res) => {
         if (err) {
             result(err, null)
             return;

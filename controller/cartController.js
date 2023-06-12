@@ -12,12 +12,12 @@ const cartController = {
         })
     },
     add: (req, res) => {
-        const { userID, productID, productSizeID, price, image } = req.body;
-        Cart.checkCart(userID, productID, productSizeID, (err, data) => {
+        const { userID, productID, size, price, image } = req.body;
+        Cart.checkCart(userID, productID, size, (err, data) => {
             if (!data) {
                 const cartID = Math.floor(Math.random() * 100000);
                 const number = 1;
-                db.query('insert into cart set ?', { cartID, userID, productID, productSizeID, price, number, image }, (err, respond) => {
+                db.query('insert into cart set ?', { cartID, userID, productID, size, price, number, image }, (err, respond) => {
                     if (err) {
                         res.send(err)
                     } else {
