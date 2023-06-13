@@ -20,10 +20,10 @@ const orderController = {
                 data.map((val, i) => {
                     let orderDetailID = (Math.random() + 1).toString(36).substring(4);
                     productID = val.productID;
-                    productSizeID = val.productSizeID;
+                    size = val.size;
                     number = val.number;
                     price = val.price
-                    Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, productSizeID, number, price, (result) => { })
+                    Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, (result) => { })
                 })
                 res.send('add sucess')
             })
@@ -31,11 +31,11 @@ const orderController = {
     },
     BuyItNow: (req, res) => {
         const { userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount } = req.body;
-        const { productID, productSizeID, number, price } = req.body;
+        const { productID, size, number, price } = req.body;
         let orderID = (Math.random() + 1).toString(36).substring(7);
         Order.add(orderID, userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount, (respond) => {
             let orderDetailID = (Math.random() + 1).toString(36).substring(4);
-            Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, productSizeID, number, price, (data) => {
+            Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, (data) => {
                 res.send("thanh toan thanh cong")
             })
         })

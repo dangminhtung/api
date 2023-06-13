@@ -218,7 +218,15 @@ const product_Controller = {
             else res.json(data)
         })
     },
+    test: (req, res) => {
+        var first = req.body.first
+        var size = req.body.size
 
+        for (var i = 0; i < size.length; i++) {
+            console.log(size[i][1])
+        }
+
+    }
 
 
 
