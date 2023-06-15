@@ -218,13 +218,12 @@ const product_Controller = {
             else res.json(data)
         })
     },
-    test: (req, res) => {
-        var first = req.body.first
-        var size = req.body.size
-
-        for (var i = 0; i < size.length; i++) {
-            console.log(size[i][1])
-        }
+    search: (req, res) => {
+        var name = req.query.name
+        db.query(`select * from product where name like '${name}%'`, (err, data) => {
+            if (err) res.json(err)
+            else res.json(data)
+        })
 
     }
 

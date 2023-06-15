@@ -30,9 +30,16 @@ class Order {
         })
     }
     static SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, result) {
-        db.query("insert into order_detail set ?", { orderDetailID, orderID, productID, size, number, price }, (err, res) => {
+        db.query("insert into order_detail set ?", { orderDetailID, orderID, productID, size, number, price }, (err) => {
             if (err) result(err);
-            else result(res);
+            else {
+                db.query('select quanlity from product_size where productID =? and size =?', [productID, size], (err, data) => {
+                    var quanlity = data[0].quanlity - number;
+                    db.query(`UPDATE product_size SET quanlity=? WHERE productID=? and size=? `, [quanlity, productID, size], (respond) => {
+                        result(respond)
+                    })
+                })
+            }
         })
     }
 

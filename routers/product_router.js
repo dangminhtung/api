@@ -30,5 +30,5 @@ router.get('/recommend', product_Controller.getRecommend)
 router.post('/add', product_Controller.addProduct)
 router.delete('/delete', product_Controller.deleteProduct)
 
-router.get('/test', product_Controller.test)
+router.get('/search', product_Controller.search)
 module.exports = router;

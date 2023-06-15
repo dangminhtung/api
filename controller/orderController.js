@@ -25,7 +25,7 @@ const orderController = {
                     price = val.price
                     Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, (result) => { })
                 })
-                res.send('add sucess')
+                res.send('thanh toan thanh cong')
             })
         })
     },
@@ -36,7 +36,7 @@ const orderController = {
         Order.add(orderID, userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount, (respond) => {
             let orderDetailID = (Math.random() + 1).toString(36).substring(4);
             Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, (data) => {
-                res.send("thanh toan thanh cong")
+                res.send('thanh toan thanh cong')
             })
         })
     }
