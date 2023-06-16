@@ -51,7 +51,7 @@ const orderController = {
         })
     },
     getListOrder: (req, res) => {
-        db.query('select * from order', (err, data) => {
+        db.query('select * from `order`', (err, data) => {
             if (err) res.json(err)
             else res.json(data)
         })
