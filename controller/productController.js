@@ -56,7 +56,7 @@ const product_Controller = {
             }
         }
         else {
-            db.query(`select * from product where name like '${nameProduct}%'`, (err, data) => {
+            db.query(`select * from product where name like '%${nameProduct}%'`, (err, data) => {
                 if (err) res.json(err)
                 else res.json(data)
             })
@@ -121,7 +121,7 @@ const product_Controller = {
                 })
             }
         } else {
-            db.query(`select * from product where name like '${nameProduct}%'`, (err, data) => {
+            db.query(`select * from product where name like '%${nameProduct}%'`, (err, data) => {
                 if (err) res.json(err)
                 else res.json(data)
             })
@@ -181,7 +181,7 @@ const product_Controller = {
                 })
             }
         } else {
-            db.query(`select * from product where name like '${nameProduct}%'`, (err, data) => {
+            db.query(`select * from product where name like '%${nameProduct}%'`, (err, data) => {
                 if (err) res.json(err)
                 else res.json(data)
             })
