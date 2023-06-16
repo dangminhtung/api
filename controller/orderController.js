@@ -64,6 +64,8 @@ const orderController = {
         })
     },
     checkOrder: async (req, res) => {
+        var gmail = req.body.gmail;
+        var orderID = req.body.orderID;
         try {
             const accessToken = await oAuth2Client.getAccessToken();
             const transport = nodemailer.createTransport({
@@ -79,17 +81,19 @@ const orderController = {
             })
             let info = await transport.sendMail({
                 from: '<minhtungd2402@gmail.com>',
-                to: 'can1caiten2004@gmail.com',
-                subject: "hello",
-                text: "heloo can 1 cai ten",
-                html: "<b>hello world</b>",
+                to: gmail,
+                subject: "Thư Xác Nhận",
+                text: "đơn hàng của bạn đã được duyệt thành công ",
+
             });
-            res.json('da duyet don hang')
+            db.query('update `order` set status="delivery" where orderID=?', [orderID], (err, data) => {
+                if (err) res.json(err)
+                else res.json(data)
+            })
+
         } catch (error) {
             res.json(error)
         }
-
-
     }
 
 
