@@ -8,47 +8,57 @@ const product_Controller = {
         var to = req.query.to;
         var size = req.query.size;
         var sort_by = req.query.sort_by;
+
         var name, arr;
-        if (sort_by == 'title-ascending') {
-            name = 'name'
-            arr = 'ASC'
-        } else if (sort_by == 'title-descending') {
-            name = 'name'
-            arr = 'DESC'
-        } else if (sort_by == 'price-ascending') {
-            name = 'price'
-            arr = 'ASC'
-        } else if (sort_by == 'price-descending') {
-            name = 'price'
-            arr = 'DESC'
-        } else if (sort_by == 'created-ascending') {
-            name = 'createDate'
-            arr = 'ASC'
-        } else if (sort_by == 'created-descending') {
-            name = 'createDate'
-            arr = 'DESC'
+        var nameProduct = req.query.nameProduct
+        if (!nameProduct) {
+            if (sort_by == 'title-ascending') {
+                name = 'name'
+                arr = 'ASC'
+            } else if (sort_by == 'title-descending') {
+                name = 'name'
+                arr = 'DESC'
+            } else if (sort_by == 'price-ascending') {
+                name = 'price'
+                arr = 'ASC'
+            } else if (sort_by == 'price-descending') {
+                name = 'price'
+                arr = 'DESC'
+            } else if (sort_by == 'created-ascending') {
+                name = 'createDate'
+                arr = 'ASC'
+            } else if (sort_by == 'created-descending') {
+                name = 'createDate'
+                arr = 'DESC'
+            }
+            if (from == null) from = 0;
+            if (to == null) to = 10000;
+            if (size == null && sort_by == null) {
+                db.query('select * from product where price >=? and price<=?', [from, to], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else if (sort_by == null) {
+                db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? LIMIT 0,100', [size, from, to], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else if (size == null) {
+                db.query(`select * from product where price>=? and price <=? order by ${name} ${arr}`, [from, to], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else {
+                db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? order by pro.${name} ${arr}`, [from, to, size], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            }
         }
-        if (from == null) from = 0;
-        if (to == null) to = 10000;
-        if (size == null && sort_by == null) {
-            db.query('select * from product where price >=? and price<=?', [from, to], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else if (sort_by == null) {
-            db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? LIMIT 0,100', [size, from, to], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else if (size == null) {
-            db.query(`select * from product where price>=? and price <=? order by ${name} ${arr}`, [from, to], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else {
-            db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? order by pro.${name} ${arr}`, [from, to, size], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
+        else {
+            db.query(`select * from product where name like '${nameProduct}%'`, (err, data) => {
+                if (err) res.json(err)
+                else res.json(data)
             })
         }
 
@@ -64,46 +74,56 @@ const product_Controller = {
         var size = req.query.size;
         var sort_by = req.query.sort_by;
         var name, arr;
-        if (sort_by == 'title-ascending') {
-            name = 'name'
-            arr = 'ASC'
-        } else if (sort_by == 'title-descending') {
-            name = 'name'
-            arr = 'DESC'
-        } else if (sort_by == 'price-ascending') {
-            name = 'price'
-            arr = 'ASC'
-        } else if (sort_by == 'price-descending') {
-            name = 'price'
-            arr = 'DESC'
-        } else if (sort_by == 'created-ascending') {
-            name = 'createDate'
-            arr = 'ASC'
-        } else if (sort_by == 'created-descending') {
-            name = 'createDate'
-            arr = 'DESC'
-        }
-        if (from == null) from = 0;
-        if (to == null) to = 10000;
-        if (size == null && sort_by == null) {
-            db.query('select * from product where price >=? and price<=? and categoryID =? ', [from, to, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else if (sort_by == null) {
-            db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? and categoryID=? LIMIT 0,100', [size, from, to, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else if (size == null) {
-            db.query(`select * from product where price>=? and price <=? and categoryID=? order by ${name} ${arr}`, [from, to, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
+        var nameProduct = req.query.nameProduct
+        if (!nameProduct) {
+
+
+            if (sort_by == 'title-ascending') {
+                name = 'name'
+                arr = 'ASC'
+            } else if (sort_by == 'title-descending') {
+                name = 'name'
+                arr = 'DESC'
+            } else if (sort_by == 'price-ascending') {
+                name = 'price'
+                arr = 'ASC'
+            } else if (sort_by == 'price-descending') {
+                name = 'price'
+                arr = 'DESC'
+            } else if (sort_by == 'created-ascending') {
+                name = 'createDate'
+                arr = 'ASC'
+            } else if (sort_by == 'created-descending') {
+                name = 'createDate'
+                arr = 'DESC'
+            }
+            if (from == null) from = 0;
+            if (to == null) to = 10000;
+            if (size == null && sort_by == null) {
+                db.query('select * from product where price >=? and price<=? and categoryID =? ', [from, to, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else if (sort_by == null) {
+                db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? and categoryID=? LIMIT 0,100', [size, from, to, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else if (size == null) {
+                db.query(`select * from product where price>=? and price <=? and categoryID=? order by ${name} ${arr}`, [from, to, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else {
+                db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? and categoryID=? order by pro.${name} ${arr}`, [from, to, size, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            }
         } else {
-            db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? and categoryID=? order by pro.${name} ${arr}`, [from, to, size, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
+            db.query(`select * from product where name like '${nameProduct}%'`, (err, data) => {
+                if (err) res.json(err)
+                else res.json(data)
             })
         }
     },
@@ -114,46 +134,56 @@ const product_Controller = {
         var size = req.query.size;
         var sort_by = req.query.sort_by;
         var name, arr;
-        if (sort_by == 'title-ascending') {
-            name = 'name'
-            arr = 'ASC'
-        } else if (sort_by == 'title-descending') {
-            name = 'name'
-            arr = 'DESC'
-        } else if (sort_by == 'price-ascending') {
-            name = 'price'
-            arr = 'ASC'
-        } else if (sort_by == 'price-descending') {
-            name = 'price'
-            arr = 'DESC'
-        } else if (sort_by == 'created-ascending') {
-            name = 'createDate'
-            arr = 'ASC'
-        } else if (sort_by == 'created-descending') {
-            name = 'createDate'
-            arr = 'DESC'
-        }
-        if (from == null) from = 0;
-        if (to == null) to = 10000;
-        if (size == null && sort_by == null) {
-            db.query('select * from product where price >=? and price<=? and categoryID =? ', [from, to, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else if (sort_by == null) {
-            db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? and categoryID=? LIMIT 0,100', [size, from, to, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
-        } else if (size == null) {
-            db.query(`select * from product where price>=? and price <=? and categoryID=? order by ${name} ${arr}`, [from, to, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
-            })
+        var nameProduct = req.query.nameProduct
+        if (!nameProduct) {
+
+
+            if (sort_by == 'title-ascending') {
+                name = 'name'
+                arr = 'ASC'
+            } else if (sort_by == 'title-descending') {
+                name = 'name'
+                arr = 'DESC'
+            } else if (sort_by == 'price-ascending') {
+                name = 'price'
+                arr = 'ASC'
+            } else if (sort_by == 'price-descending') {
+                name = 'price'
+                arr = 'DESC'
+            } else if (sort_by == 'created-ascending') {
+                name = 'createDate'
+                arr = 'ASC'
+            } else if (sort_by == 'created-descending') {
+                name = 'createDate'
+                arr = 'DESC'
+            }
+            if (from == null) from = 0;
+            if (to == null) to = 10000;
+            if (size == null && sort_by == null) {
+                db.query('select * from product where price >=? and price<=? and categoryID =? ', [from, to, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else if (sort_by == null) {
+                db.query('SELECT pro.`productID`,pro.name,pro.`categoryID`,pro.price,pro.metarial,pro.vendor,pro.`createDate`,pro.image from product as pro inner join product_size as pros on pro.`productID`=pros.`productID` where  pros.size=? and price>=? and price <=? and categoryID=? LIMIT 0,100', [size, from, to, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else if (size == null) {
+                db.query(`select * from product where price>=? and price <=? and categoryID=? order by ${name} ${arr}`, [from, to, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            } else {
+                db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? and categoryID=? order by pro.${name} ${arr}`, [from, to, size, cate], (err, data) => {
+                    if (err) res.json(err);
+                    else res.json(data);
+                })
+            }
         } else {
-            db.query(`SELECT pro.productID,pro.name,pro.categoryID,pro.price,pro.metarial,pro.vendor,pro.createDate,pro.image from product as pro inner join product_size as pros on pro.productID=pros.productID where pro.price>=? and pro.price<=? and pros.size=? and categoryID=? order by pro.${name} ${arr}`, [from, to, size, cate], (err, data) => {
-                if (err) res.json(err);
-                else res.json(data);
+            db.query(`select * from product where name like '${nameProduct}%'`, (err, data) => {
+                if (err) res.json(err)
+                else res.json(data)
             })
         }
     },
