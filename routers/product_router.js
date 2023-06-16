@@ -31,5 +31,5 @@ router.get('/recommend', product_Controller.getRecommend)
 router.post('/add', middleware.verifyTokenAdmin, product_Controller.addProduct)
 router.delete('/delete', middleware.verifyTokenAdmin, product_Controller.deleteProduct)
 
-router.get('/search', product_Controller.search)
-module.exports = router;
+router.get('/test', product_Controller.test)
+module.exports = router

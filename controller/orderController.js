@@ -39,7 +39,14 @@ const orderController = {
                 res.send('thanh toan thanh cong')
             })
         })
+    },
+    getListOrder: (req, res) => {
+        db.query('select * from order', (err, data) => {
+            if (err) res.json(err)
+            else res.json(data)
+        })
     }
+
 
 }
 module.exports = orderController;

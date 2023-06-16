@@ -193,13 +193,20 @@ const product_Controller = {
     },
 
     addProduct: (req, res) => {
+        var sizes = req.body.sizes
         const { productID, name, categoryID, price, metarial, vendor, createDate, image } = req.body
-        // const image = req.file.filename
         db.query('insert into product set ? ', { productID, name, categoryID, price, metarial, vendor, createDate, image }, (err) => {
             if (err) {
                 res.status(403).json(err);
             } else {
-                res.status(200).json('add sucess')
+                var quanlity = 50
+                for (let i = 0; i < sizes.length; i++) {
+                    var size = sizes[i]
+                    db.query('insert into product_size set ?', { productID, size, quanlity }, (err, data) => {
+
+                    })
+                }
+                res.json('them thanh cong')
             }
         })
     },
@@ -244,11 +251,22 @@ const product_Controller = {
             else res.json(data)
         })
     },
-    search: (req, res) => {
-        var name = req.query.name
-        db.query(`select * from product where name like '${name}%'`, (err, data) => {
-            if (err) res.json(err)
-            else res.json(data)
+    test: (req, res) => {
+        var sizes = req.body.sizes
+        const { productID, name, categoryID, price, metarial, vendor, createDate, image } = req.body
+        db.query('insert into product set ? ', { productID, name, categoryID, price, metarial, vendor, createDate, image }, (err) => {
+            if (err) {
+                res.status(403).json(err);
+            } else {
+                var quanlity = 50
+                for (let i = 0; i < sizes.length; i++) {
+                    var size = sizes[i]
+                    db.query('insert into product_size set ?', { productID, size, quanlity }, (err, data) => {
+
+                    })
+                }
+                res.json('them thanh cong')
+            }
         })
 
     }

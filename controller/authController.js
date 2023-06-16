@@ -2,7 +2,7 @@ var User = require('../models/user_model')
 const db = require('../common/connect')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-// let refreshTokens = [];
+let refreshTokens = [];
 const authController = {
     generateAccessToken: (user) => {
         return jwt.sign({
