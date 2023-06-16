@@ -4,19 +4,6 @@ const middleware = require("../controller/middleware");
 // var multer = require('multer')
 var router = express.Router();
 
-
-// const storage = multer.diskStorage({
-//     destination: './uploads',
-//     filename: (req, file, cb) => {
-//         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-//     }
-// })
-// const upload = multer({
-//     storage: storage
-// })
-
-// arrange Alpha A-Z
-
 router.get('/size/:id', product_Controller.getSize)
 
 router.get('/list', product_Controller.get_all_product);

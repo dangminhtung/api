@@ -1,6 +1,16 @@
 const db = require('../common/connect')
 const Order = require('../models/order_model');
 const Cart = require('../models/cart_model')
+const { google } = require('googleapis')
+const nodemailer = require('nodemailer')
+require('dotenv').config();
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+const REDIRECT_URI = process.env.REDIRECT_URI
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN
+
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 
 const orderController = {
@@ -45,7 +55,43 @@ const orderController = {
             if (err) res.json(err)
             else res.json(data)
         })
+    },
+    getOrderDetail: (req, res) => {
+        var orderID = req.params.orderID
+        db.query('select * from order_detail where orderID=?', [orderID], (err, data) => {
+            if (err) res.json(err)
+            else res.json(data)
+        })
+    },
+    checkOrder: async (req, res) => {
+        try {
+            const accessToken = await oAuth2Client.getAccessToken();
+            const transport = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    type: 'OAuth2',
+                    user: 'minhtungd2402@gmail.com',
+                    clientId: CLIENT_ID,
+                    clientSecret: CLIENT_SECRET,
+                    refreshToken: REFRESH_TOKEN,
+                    accessToken: accessToken
+                }
+            })
+            let info = await transport.sendMail({
+                from: '<minhtungd2402@gmail.com>',
+                to: 'can1caiten2004@gmail.com',
+                subject: "hello",
+                text: "heloo can 1 cai ten",
+                html: "<b>hello world</b>",
+            });
+            res.json('da duyet don hang')
+        } catch (error) {
+            res.json(error)
+        }
+
+
     }
+
 
 
 }

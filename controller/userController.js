@@ -19,7 +19,6 @@ const userController = {
         }
     },
     delete_user: (req, res) => {
-
         try {
             db.query('delete from user where userID=?', [req.params.id], (err) => {
                 if (err) res.status(403).json('loi');
