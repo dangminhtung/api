@@ -62,10 +62,6 @@ const product_Controller = {
             })
         }
 
-
-
-
-
     },
     get_shoe_sport: (req, res) => {
         var cate = 'cate1'

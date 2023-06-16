@@ -2,7 +2,7 @@ var User = require('../models/user_model')
 const db = require('../common/connect')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-let refreshTokens = [];
+// let refreshTokens = [];
 const authController = {
     generateAccessToken: (user) => {
         return jwt.sign({
@@ -55,6 +55,13 @@ const authController = {
         } catch (err) {
             res.status(500).json(err);
         }
+    },
+    getInformation: (req, res) => {
+        var userID = req.body.userID
+        db.query('select * from user where userID=?', [userID], (err, data) => {
+            if (err) res.json(err)
+            else res.json(data)
+        })
     }
 }
 
