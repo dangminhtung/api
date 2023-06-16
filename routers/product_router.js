@@ -1,5 +1,6 @@
 var express = require("express")
-var product_Controller = require('../controller/productController')
+var product_Controller = require('../controller/productController');
+const middleware = require("../controller/middleware");
 // var multer = require('multer')
 var router = express.Router();
 
@@ -27,8 +28,8 @@ router.get('/product_detail/:id', product_Controller.get_detail_product)
 router.post('/update', product_Controller.updateProduct)
 
 router.get('/recommend', product_Controller.getRecommend)
-router.post('/add', product_Controller.addProduct)
-router.delete('/delete', product_Controller.deleteProduct)
+router.post('/add', middleware.verifyTokenAdmin, product_Controller.addProduct)
+router.delete('/delete', middleware.verifyTokenAdmin, product_Controller.deleteProduct)
 
 router.get('/search', product_Controller.search)
 module.exports = router;
