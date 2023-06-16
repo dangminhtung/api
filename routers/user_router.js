@@ -9,5 +9,5 @@ router.post('/login', authController.login)
 router.post('/register', authController.register)
 router.get('/getInformation', authController.getInformation)
 
-router.delete('delete/:id', middleware.verifyTokenAdmin, userController.delete_user)
+router.delete('/delete/:id', middleware.verifyTokenAdmin, userController.delete_user)
 module.exports = router
