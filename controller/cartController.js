@@ -1,4 +1,3 @@
-var Product = require('../models/product_model');
 var Cart = require('../models/cart_model')
 const db = require('../common/connect');
 const { response } = require('express');
