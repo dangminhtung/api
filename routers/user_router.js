@@ -10,5 +10,5 @@ router.post('/register', authController.register)
 router.get('/getInformation', authController.getInformation)
 
 router.delete('/delete/:id', middleware.verifyTokenAdmin, userController.delete_user)
-router.post('/changePassword', authController.changePassword)
+router.post('/changePassword', middleware.verifyToken, authController.changePassword)
 module.exports = router
