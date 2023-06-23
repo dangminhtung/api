@@ -94,6 +94,14 @@ const orderController = {
         } catch (error) {
             res.json(error)
         }
+    },
+    getOrderUser: (req, res) => {
+        var userID = req.body.userID
+        db.query('select * from order where userID=?', userID, (err, data) => {
+            if (err) res.json(err)
+            else res.json(data)
+
+        })
     }
 
 
