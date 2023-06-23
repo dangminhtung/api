@@ -10,4 +10,6 @@ router.get('/listOrder', orderController.getListOrder)
 router.get('/order_detail/:orderID', orderController.getOrderDetail)
 
 router.post('/checkOrder', orderController.checkOrder)
+
+router.get('/getOrderUser', orderController.getOrderUser)
 module.exports = router;

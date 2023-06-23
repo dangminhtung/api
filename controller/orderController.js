@@ -100,11 +100,7 @@ const orderController = {
         db.query('select * from order where userID=?', userID, (err, data) => {
             if (err) res.json(err)
             else res.json(data)
-
         })
     }
-
-
-
 }
 module.exports = orderController;
