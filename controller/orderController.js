@@ -96,7 +96,7 @@ const orderController = {
         }
     },
     getOrderUser: (req, res) => {
-        var userID = req.body.userID
+        var userID = req.params.userID
         db.query('select * from `order` where userID=?', userID, (err, data) => {
             if (err) res.json(err)
             else res.json(data)
