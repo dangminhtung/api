@@ -35,7 +35,7 @@ const orderController = {
                     price = val.price
                     Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, (result) => { })
                 })
-                res.send(orderID)
+                res.json(orderID)
             })
         })
     },
@@ -46,10 +46,11 @@ const orderController = {
         Order.add(orderID, userID, createDate, shipName, shipMobile, shipAddress, shipEmail, totalAmount, (respond) => {
             let orderDetailID = (Math.random() + 1).toString(36).substring(4);
             Order.SaveCartToOrder_deltail(orderDetailID, orderID, productID, size, number, price, (data) => {
-               res.json(orderID)
+                res.json(orderID)
             })
         })
     },
+
     getListOrder: (req, res) => {
         db.query('select * from `order`', (err, data) => {
             if (err) res.json(err)
