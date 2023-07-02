@@ -84,7 +84,7 @@ const orderController = {
                 from: '<minhtungd2402@gmail.com>',
                 to: gmail,
                 subject: "Thư Xác Nhận",
-                text: `đơn hàng của bạn đã được duyệt thành công `,
+                text: "đơn hàng của bạn đã được duyệt thành công",
 
             });
             db.query('update `order` set status="delivery" where orderID=?', [orderID], (err, data) => {
